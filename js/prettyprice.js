@@ -1,14 +1,11 @@
 $(function () {
-    function addCommas(nStr) {
-        nStr += '';
-        x = nStr.split('.');
-        x1 = x[0];
-        x2 = x.length > 1 ? '.' + x[1] : '';
+    function addSep(s, sep) {
+        s += '';
         var rgx = /(\d+)(\d{3})/;
-        while (rgx.test(x1)) {
-            x1 = x1.replace(rgx, '$1' + ',' + '$2');
+        while (rgx.test(s)) {
+            s = s.replace(rgx, '$1' + sep + '$2');
         }
-        return x1 + x2;
+        return s;
     }
     function roundPrice(integral, fractional) {
         if ((integral.substr(-1) === '9' && integral.length > 1) || (fractional && fractional[0] === '9')) {
@@ -26,7 +23,45 @@ $(function () {
                     var priceContainer = $(this),
                         price = priceContainer.text().replace(/^\s+|\s+$/g, '').split('.'),
                         newPrice = roundPrice(price[0].replace('$', '').replace(',', ''), price[1]);
-                    if (newPrice != undefined) priceContainer.text(' $' + addCommas(newPrice + '.00'));
+                    if (newPrice != undefined) priceContainer.text(' $' + addSep(newPrice, ',') + '.00');
+                });
+            }
+            function dynamicFix() {
+                var serp = $('div#btfResults');
+                if (!serp.attr('PP_Fixed')) {
+                    fix();
+                    serp.attr('PP_Fixed', true);
+                }
+            }
+            fix();
+            setInterval(dynamicFix, 200);
+        },
+        'www.amazon.co.uk': function () {
+            function fix() {
+                $.each($('span.price, b.priceLarge'), function () {
+                    var priceContainer = $(this),
+                        price = priceContainer.text().replace(/^\s+|\s+$/g, '').split('.'),
+                        newPrice = roundPrice(price[0].replace('£', '').replace(',', ''), price[1]);
+                    if (newPrice != undefined) priceContainer.text(' £' + addSep(newPrice, ',') + '.00');
+                });
+            }
+            function dynamicFix() {
+                var serp = $('div#btfResults');
+                if (!serp.attr('PP_Fixed')) {
+                    fix();
+                    serp.attr('PP_Fixed', true);
+                }
+            }
+            fix();
+            setInterval(dynamicFix, 200);
+        },
+        'www.amazon.de': function () {
+            function fix() {
+                $.each($('span.price, b.priceLarge'), function () {
+                    var priceContainer = $(this),
+                        price = priceContainer.text().replace(/^\s+|\s+$/g, '').split(','),
+                        newPrice = roundPrice(price[0].replace('EUR ', '').replace('.', ''), price[1]);
+                    if (newPrice != undefined) priceContainer.text(' EUR ' + addSep(newPrice, '.') + ',00');
                 });
             }
             function dynamicFix() {
