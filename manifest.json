@@ -2,6 +2,10 @@
     "name": "Pretty Price",
     "version": "0.1",
     "description": "Fixes prices ending in 99 to integers in the popular online stores - www.amazon.com, more stores are expected in the next version.",
+    "icons": {
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
     "content_scripts": [
         {
             "matches": ["<all_urls>"],
