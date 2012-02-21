@@ -1,0 +1,11 @@
+{
+    "name": "Pretty Price",
+    "version": "0.1",
+    "description": "Fixes prices ending in 99 to integers in the popular online stores - www.amazon.com, more stores are expected in the next version.",
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/jquery-1.7.1.min.js", "js/prettyprice.js"]
+        }
+    ]
+}
