@@ -1,6 +1,6 @@
 {
     "name": "Pretty Price",
-    "version": "0.1.1",
+    "version": "0.1.2",
     "description": "\"Pretty Price\" extension rounds the prices ending in 99 off to integers in the popular online shops.",
     "icons": {
         "48": "images/icon48.png",
