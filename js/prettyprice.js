@@ -77,4 +77,7 @@ $(function () {
     }[window.location.hostname];
 
     if (fixer != undefined) fixer();
+
+    $('<div id="pretty-price-installed"></div>')
+        .css('display', 'none').appendTo('body');
 });
